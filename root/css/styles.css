@@ -1,0 +1,287 @@
+html, body{
+    position: absolute;
+    top:0;
+    left:0;
+    padding: 0;
+    margin: 0;
+    width:100%;
+    height: 100%;
+    overflow: hidden;
+    /*overflow-x: hidden;*/
+    /*overflow-y: scroll;*/
+}
+
+#canvas{
+    position: absolute;
+    top:100px;
+    left:20px;
+    z-index: 0;
+}
+.content_block{
+
+    position: fixed;
+    width:100%;
+    height: 100%;
+    top:0;
+    left:0;
+    overflow: hidden;
+    visibility: hidden;
+    z-index: 1;
+    /*pointer-events: none;*/
+}
+
+/** Menu **/
+#menu{
+    position: fixed;
+    right:0;
+    top:0;
+    height:100%;
+
+    visibility: hidden;
+}
+#menu .btn_open{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 1;
+    background: url(../images/menu_close_icon.jpg);
+    width: 33px;
+    height: 25px;
+    cursor: pointer;
+}
+#menu .btn_close{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 1;
+    background: url(../images/menu_open_x.png);
+    width: 27px;
+    height: 27px;
+    cursor: pointer;
+    visibility: hidden;
+}
+.menu_container{
+    position: absolute;
+    left:0;
+    top:0;
+    width:230px;
+    height:100%;
+    background: #9D0009;
+    z-index: 0;
+}
+.top_grid{
+    position: absolute;
+    background: url(../images/menu_cube_up.png);
+    width: 144px;
+    height: 57px;
+    top:0;
+    left:0;
+}
+.bottom_grid{
+    position: absolute;
+    background: url(../images/menu_cube_down.png);
+    width: 156px;
+    height: 57px;
+    bottom:0;
+    right:0;
+}
+
+#menu .button_container{
+    position: absolute;
+    left:40px;
+    top:110px;
+    width:100px;
+}
+#menu .menu_item{
+    position: relative;
+    float: left;
+    width:100px;
+    height: 40px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    /*background: #000;*/
+}
+#menu .menu_icon{
+    position: absolute;
+    top:5px;
+    width: 40px;
+    height: 40px;
+    background: url(../images/menu_txt.png) no-repeat;
+}
+#menu .menu_item:nth-of-type(1) .menu_icon{
+    background-position: 0 5px;
+}
+#menu .menu_item:nth-of-type(2) .menu_icon{
+    background-position: 0 -51px;
+}
+#menu .menu_item:nth-of-type(3) .menu_icon{
+    background-position: 0 -107px;
+}
+#menu .menu_item:nth-of-type(4) .menu_icon{
+    background-position: 0 -163px;
+}
+#menu .menu_item:nth-of-type(5) .menu_icon{
+    background-position: 0 -219px;
+}
+#menu .menu_item:nth-of-type(6) .menu_icon{
+    background-position: 0 -275px;
+}
+#menu .menu_text{
+    position: absolute;
+    left:40px;
+    width: 110px;
+    height: 44px;
+    background: url(../images/menu_txt.png) no-repeat;
+}
+#menu .menu_item:nth-of-type(1) .menu_text{
+    background-position: -40px 10px;
+}
+#menu .menu_item:nth-of-type(2) .menu_text{
+    background-position: -40px -46px;
+}
+#menu .menu_item:nth-of-type(3) .menu_text{
+    background-position: -40px -102px;
+}
+#menu .menu_item:nth-of-type(4) .menu_text{
+    background-position: -40px -158px;
+}
+#menu .menu_item:nth-of-type(5) .menu_text{
+    background-position: -40px -214px;
+}
+#menu .menu_item:nth-of-type(6) .menu_text{
+    background-position: -40px -270px;
+}
+#menu .menu_line{
+    position: absolute;
+    background: url(../images/menu_line.png);
+    width: 102px;
+    height: 4px;
+    left:40px;
+
+    pointer-events: none;
+}
+
+#menu .btn_info{
+    position: absolute;
+    background: url(../images/menu_txt.png) no-repeat 0 -416px;
+    width: 154px;
+    height: 44px;
+    cursor: pointer;
+    left: 40px;
+    bottom:75px;
+}
+
+
+/** Index **/
+
+/** Card Game **/
+.button{
+    background: #ccc;
+    color:#333;
+    font-size: 16px;
+    font-weight: bold;
+}
+.game_container{
+    position: absolute;
+    top:50%;
+    left:50%;
+
+
+}
+
+.card_container{
+    position: absolute;
+    left:0;
+    top:0;
+    /*pointer-events: auto;*/
+}
+
+.btn_start{
+
+    position: absolute;
+
+
+    background: #aaab04;
+    box-shadow: 0 1px 0 0 #aaba31 inset, 0 0 0 4px #e6e6e6;
+    border-radius: 2px;
+    text-shadow: 0 1px 1px #aa7a03;
+    padding: 6px 30px;
+    border: 1px solid #aa9904;
+    transition: all 0.2s ease-in-out;
+
+    left: -69px;
+    top:-21px;
+
+    font-size: 24px;
+
+    color: #eee;
+
+    cursor: pointer;
+
+    z-index: 1;
+
+    /*display: none;*/
+}
+.btn_start:hover{
+    text-shadow: 0 1px 1px #695c00;
+}
+.card_picture{
+    position: absolute;
+    background: url(../images/game_cards_all.png);
+    background-size: cover;
+    left: -80px;
+    top:-100px;
+    width: 160px;
+    height: 200px;
+}
+.time_value{
+    position: absolute;
+    font-size: 72px;
+    color: #f0f0f0;
+
+    width: 200px;
+    text-align: center;
+
+    top:20px;
+    left:50%;
+    margin-left:-98px;
+
+    display: none;
+
+    cursor: default;
+}
+
+/** game Timer **/
+.game_timer{
+    position: absolute;
+    top:20px;
+    left:50%;
+    display: none;
+}
+.time_text{
+    position: absolute;
+    background:url(../images/game_time.png);
+    width: 135px;
+    height: 40px;
+    left:-67px;
+}
+.number_container{
+    position: absolute;
+    top:50px;
+    height:82px;
+}
+.number_char{
+    position: absolute;
+    bottom:0;
+    background:url(../images/numbers.png);
+    width: 80px;
+    height: 82px;
+}
+.dot_char{
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    bottom:0;
+    background: #fff;
+}
+/* ================ */
