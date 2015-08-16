@@ -53,6 +53,7 @@
         Index.init();
         Feature.init();
         Watch.init();
+        Detail.init();
         Prize.init();
         CardGame.init();
 
@@ -262,6 +263,7 @@
         Index.resize(width, height, bound.ratio);
         Feature.resize(width, height, bound.ratio);
         Watch.resize(width, height, bound.ratio);
+        Detail.resize(width, height, bound.ratio);
         Prize.resize(width, height, bound.ratio);
         CardGame.resize(width, height, bound.ratio);
 

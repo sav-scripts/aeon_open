@@ -425,6 +425,30 @@ p.nominalBounds = new cjs.Rectangle(-331.6,-229.5,331.6,443);
 p.nominalBounds = new cjs.Rectangle(-79,-112.7,158,225.5);
 
 
+(lib.Tween4 = function() {
+	this.initialize();
+
+	// Layer 1
+	this.shape = new cjs.Shape();
+	this.shape.graphics.bf(img.index_ground, null, new cjs.Matrix2D(1,0,0,1,-960,-147.5)).s("#FF0000").ss(1,1,1).dr(-103.05,-103.05,206.1,206.1);
+
+	this.addChild(this.shape);
+}).prototype = p = new cjs.Container();
+p.nominalBounds = new cjs.Rectangle(-104,-104,208.1,208.1);
+
+
+(lib.Tween3 = function() {
+	this.initialize();
+
+	// Layer 1
+	this.shape = new cjs.Shape();
+	this.shape.graphics.bf(img.index_ground, null, new cjs.Matrix2D(1,0,0,1,-960,-147.5)).s("#FF0000").ss(1,1,1).dr(-103.05,-103.05,206.1,206.1);
+
+	this.addChild(this.shape);
+}).prototype = p = new cjs.Container();
+p.nominalBounds = new cjs.Rectangle(-104,-104,208.1,208.1);
+
+
 (lib.Tween2 = function() {
 	this.initialize();
 
@@ -1165,7 +1189,7 @@ p.nominalBounds = new cjs.Rectangle(-586.1,-418.5,1348.2,913.6);
 
 
 (lib.MainScene = function(mode,startPosition,loop) {
-	this.initialize(mode,startPosition,loop,{"/Index":30,"/Feature":60,"/Watch":90,"/Prize":120,"/CardGame":150});
+	this.initialize(mode,startPosition,loop,{"/Index":30,"/Feature":60,"/Watch":90,"/Detail":120,"/Prize":150,"/CardGame":180});
 
 	// timeline functions:
 	this.frame_0 = function() {
@@ -1402,6 +1426,34 @@ p.nominalBounds = new cjs.Rectangle(-432.5,-232,865,464);
 
 }).prototype = p = new cjs.MovieClip();
 p.nominalBounds = new cjs.Rectangle(-632.1,-374,1314.2,852.1);
+
+
+(lib.DetailClip = function(mode,startPosition,loop) {
+	this.initialize(mode,startPosition,loop,{"StageIn":11,"StageInComplete":33});
+
+	// timeline functions:
+	this.frame_0 = function() {
+		this.stop();
+	}
+
+	// actions tween:
+	this.timeline.addTween(cjs.Tween.get(this).call(this.frame_0).wait(64));
+
+	// Layer 1
+	this.shape = new cjs.Shape();
+	this.shape.graphics.bf(img.index_ground, null, new cjs.Matrix2D(1,0,0,1,-960,-147.5)).s("#FF0000").ss(1,1,1).dr(-103.05,-103.05,206.1,206.1);
+
+	this.instance = new lib.Tween3("synched",0);
+	this.instance.alpha = 0;
+	this.instance._off = true;
+
+	this.instance_1 = new lib.Tween4("synched",0);
+
+	this.timeline.addTween(cjs.Tween.get({}).to({state:[{t:this.shape}]}).to({state:[{t:this.instance}]},11).to({state:[{t:this.instance_1}]},22).wait(31));
+	this.timeline.addTween(cjs.Tween.get(this.instance).wait(11).to({_off:false},0).to({_off:true,alpha:1},22).wait(31));
+
+}).prototype = p = new cjs.MovieClip();
+p.nominalBounds = new cjs.Rectangle(-104,-104,208.1,208.1);
 
 
 (lib.CardGameClip = function(mode,startPosition,loop) {

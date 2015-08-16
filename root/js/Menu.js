@@ -71,14 +71,7 @@
             {
                 var hash = _hashList[index];
 
-                if(hash == "/Detail")
-                {
-                    console.log("車色規格外連");
-                }
-                else
-                {
-                    Main.toHash(hash);
-                }
+                Main.toHash(hash);
                 hide();
             });
 
