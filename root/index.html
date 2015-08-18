@@ -16,6 +16,7 @@
     <script src="http://code.createjs.com/preloadjs-0.4.1.min.js"></script>
 
     <script src="js/lib/Helper.1.0.1.js"></script>
+    <script src="js/lib/FormHelper.0.0.4.js"></script>
     <script src="js/lib/Utility.0.0.10.js"></script>
     <script src="js/CreatejsExtend.js"></script>
     <script src="AeonOpen.js"></script>
@@ -26,9 +27,15 @@
     <script src="js/Detail.js"></script>
     <script src="js/Prize.js"></script>
     <script src="js/CardGame.js"></script>
+    <script src="js/Popups.js"></script>
     <script src="js/MainScene.js"></script>
     <script src="js/Main.js"></script>
 
+
+    <script src="js/simple_preloading/SimplePreloading.0.0.7.js"></script>
+    <link rel="stylesheet" type="text/css" href="js/simple_preloading/SimplePreloading.css" />
+
+    <link rel="stylesheet" href="css/misc.css" type="text/css">
     <link rel="stylesheet" href="css/styles.css" type="text/css">
 
 
@@ -59,6 +66,7 @@
     </div>
 
     <div class="game_container">
+        <div class="card_picture" style="visibility: hidden;"></div>
     </div>
 
     <div class="game_timer">
@@ -110,6 +118,64 @@
 
             <div class="top_grid"></div>
             <div class="bottom_grid"></div>
+        </div>
+
+    </div>
+
+    <div class="win_container">
+
+        <div class="win_wrapper">
+
+            <div class="first_part">
+
+                <div class="win_title"></div>
+                <div class="win_btn_share"></div>
+                <div class="win_btn_exit"></div>
+
+            </div>
+
+            <div id="share_form">
+
+                <!--<div class="share_basement"></div>-->
+
+                <div class="field_label"></div>
+
+                <input type="text" name="textfield" class="field_name" title=""/>
+                <input type="text" name="textfield" class="field_phone" title=""/>
+
+                <div class="address_county">
+                    <div class="drop_down_icon"></div>
+                    <select title="address_county"></select>
+                </div>
+
+                <div class="address_zone">
+                    <div class="drop_down_icon"></div>
+                    <select title="address_zone"></select>
+                </div>
+
+                <input type="text" name="textfield" class="address_detail" title=""/>
+
+                <!--<input type="checkbox" value="None" class="check_rule" name="check" title="" />-->
+                <div id="sign_licence_yes" class="squaredFour check_rule">
+                    <input type="checkbox" value="None" id="licence_yes" name="check" />
+                    <label for="licence_yes"></label>
+                </div>
+
+                <div class="rule_text">
+                    <div class="rule_trigger"></div>
+                </div>
+
+                <div class="form_btn_send"></div>
+
+            </div>
+
+            <div class="rule_part">
+                <div class="rule_container">
+                    <div class="rule_content"></div>
+                </div>
+                <div class="rule_btn_back"></div>
+            </div>
+
         </div>
 
     </div>

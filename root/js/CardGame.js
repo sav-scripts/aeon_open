@@ -70,6 +70,7 @@
 
     _p.init = function()
     {
+        $(".card_picture").detach();
 
         $doms.container = $("#card_game");
 
@@ -114,6 +115,8 @@
 
         MainScene.addContent(_clip);
 
+        //_clip.gotoAndStop("ReadyPlay");
+
         _clip.gotoAndStop("StageIn");
         _clip.playTo("StageInComplete");
     };
@@ -154,23 +157,15 @@
 
     function restart()
     {
+
         _clip.btnStart.addEventListener("mousedown", function()
         {
-            /*
-            _clip.btnStart.removeAllEventListeners();
-            _clip.addEventListener("readyPlay", function()
-            {
-                _clip.removeAllEventListeners();
-                cardIn();
-            });
-
-            _clip.gotoAndPlay("Start");
-            */
             _clip.playTo("ReadyPlay", null, function()
             {
                 cardIn();
             });
         });
+
     }
 
     function cardIn()
@@ -290,6 +285,9 @@
                 {
                     console.log("not match");
 
+                    lastCard.playUnMatched(true);
+                    card.playUnMatched();
+
                     var tl = new TimelineMax();
                     tl.add(function()
                     {
@@ -301,7 +299,7 @@
                         {
                             if(_states == CardGameStates.PLAYING) card.setActive(true);
                         });
-                    },.5);
+                    },.8);
                 }
             }
 
@@ -434,7 +432,7 @@
         _p.shuffleProgress = 1;
 
 
-        var $container, $picture;
+        var $container, $picture, $noPicture, $yesPicture, $twinklePicture;
 
         init();
 
@@ -447,8 +445,26 @@
             dom = document.createElement("div");
             dom.className = "card_picture";
             $picture = $(dom);
-
             $container.append($picture);
+
+            dom = document.createElement("div");
+            dom.className = "card_correct";
+            $yesPicture = $(dom);
+            $yesPicture.css("display", "none");
+            $container.append($yesPicture);
+
+            dom = document.createElement("div");
+            dom.className = "card_wrong";
+            $noPicture = $(dom);
+            $noPicture.css("display", "none");
+            $container.append($noPicture);
+
+            dom = document.createElement("div");
+            dom.className = "card_twinkle";
+            $twinklePicture = $(dom);
+            $twinklePicture.css("display", "none");
+            $container.append($twinklePicture);
+
 
 
             TweenMax.set($picture[0], {transformPerspective:800});
@@ -506,6 +522,10 @@
             _p.isCover = true;
             _p.flipProgress = 0;
             updateFlip();
+
+            $noPicture.css("display", "none");
+            $yesPicture.css("display", "none");
+            $twinklePicture.css("display", "none");
         };
 
         function updateFlip()
@@ -547,19 +567,22 @@
 
             $picture.css("background-position", offset + "px 0").css("left", -width *.5).css("top", -height *.5)
                 .css("background-size", "cover").css("width", width).css("height", height);
+
+            resizePic($noPicture);
+            resizePic($yesPicture);
+            resizePic($twinklePicture);
+
+            function resizePic($dom)
+            {
+                var width = 207*scale,
+                    height = 209*scale;
+                $dom.css("width", width).css("height", height).css("background-size", "cover").css("left", -width *.5).css("top", -height *.5);
+            }
         };
 
-        _p.playMatched = function()
+        _p.playMatched = function(isFirst)
         {
-            //var degree = -10;
-            //if(isFirst) degree *= -1;
-
             /*
-            var tl = new TimelineMax();
-            tl.set($picture, {rotationZ:degree});
-            tl.to($picture, 1.6, {rotationZ:0, ease:Elastic.easeOut.config(1,.15)});
-            */
-
             var i, gap = .1, times = 6;
 
             var tl = new TimelineMax();
@@ -567,6 +590,47 @@
             {
                 tl.set($picture, {autoAlpha:i%2==0?.5: 1}, i*gap);
             }
+            */
+
+            var flip = isFirst? 1: -1;
+
+            var twinkleTimes = 4,
+                gap = .2, i;
+
+
+            $yesPicture.css("display", "block");
+            $twinklePicture.css("display", "block");
+            var tl = new TimelineMax;
+            tl.set($yesPicture, {autoAlpha:1});
+            tl.set($twinklePicture, {autoAlpha:1});
+
+            for(i=0;i<twinkleTimes;i++)
+            {
+                tl.set($twinklePicture, {scaleX:flip},i*gap*2);
+                tl.set($twinklePicture, {scaleX:-1*flip},"+=" + gap);
+            }
+
+
+            //tl.set($yesPicture, {autoAlpha:0});
+            tl.to($yesPicture,.4, {autoAlpha:0}, "-=.4");
+            tl.to($twinklePicture,.4, {autoAlpha:0}, "-=.4");
+            tl.add(function()
+            {
+                $yesPicture.css("display", "none");
+                $twinklePicture.css("display", "none");
+            });
+        };
+
+        _p.playUnMatched = function()
+        {
+            $noPicture.css("display", "block");
+            var tl = new TimelineMax;
+            tl.set($noPicture, {autoAlpha:1});
+            tl.set($noPicture, {autoAlpha:0},.8);
+            tl.add(function()
+            {
+                $noPicture.css("display", "none");
+            });
         };
     }
 

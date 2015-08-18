@@ -8,7 +8,8 @@
         isVerticalMode: false,
         FPS: 30,
         width: 1920,
-        height: 1040
+        height: 1040,
+        scale: 1
     };
 
     var _p = window.Main = {};
@@ -26,7 +27,11 @@
 
     var canvas, stage;
 
-    function init() {
+    function init()
+    {
+        SimplePreloading.init();
+        SimplePreloading.show();
+
         _p.canvas = canvas = document.getElementById("canvas");
         if(!window.images) window.images = {};
 
@@ -56,6 +61,7 @@
         Detail.init();
         Prize.init();
         CardGame.init();
+        GameWin.init();
 
         handleContentAndLink();
 
@@ -65,6 +71,8 @@
         onResize();
 
         toFirstHash();
+
+        SimplePreloading.hide();
     }
 
     function handleContentAndLink()
@@ -130,6 +138,7 @@
         function scrollContent(direction)
         {
             if(_isPlaying) return;
+            if(GameWin.isShow()) return;
 
             var obj = _hashDic[_currentHash];
 
@@ -244,9 +253,6 @@
 
     };
 
-
-
-
     function onResize()
     {
         var width = $(window).width(),
@@ -258,14 +264,17 @@
 
         var bound = Helper.getSize_cover(width, height, _settings.width, _settings.height);
 
-        Menu.resize(width, height, bound.ratio);
-        MainScene.resize(width, height, bound.ratio);
-        Index.resize(width, height, bound.ratio);
-        Feature.resize(width, height, bound.ratio);
-        Watch.resize(width, height, bound.ratio);
-        Detail.resize(width, height, bound.ratio);
-        Prize.resize(width, height, bound.ratio);
-        CardGame.resize(width, height, bound.ratio);
+        var scale = _settings.scale = bound.ratio;
+
+        Menu.resize(width, height, scale);
+        MainScene.resize(width, height, scale);
+        Index.resize(width, height, scale);
+        Feature.resize(width, height, scale);
+        Watch.resize(width, height, scale);
+        Detail.resize(width, height, scale);
+        Prize.resize(width, height, scale);
+        CardGame.resize(width, height, scale);
+        GameWin.resize(width, height, scale);
 
         stage.update();
     }
