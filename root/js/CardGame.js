@@ -43,6 +43,8 @@
         IDLE: "idle"
     };
 
+    var _clipPlaying = false;
+
     var _states = CardGameStates.IDLE;
 
     var _cardPosition =
@@ -102,6 +104,19 @@
 
         _clip = new lib.CardGameClip();
 
+        _clip.btnStart.addEventListener("mousedown", function()
+        {
+            if(_clipPlaying) return;
+
+            _clipPlaying = true;
+
+            _clip.playTo("ReadyPlay", null, function()
+            {
+                _clipPlaying = false;
+                cardIn();
+            });
+        });
+
     };
 
 
@@ -117,14 +132,20 @@
 
         //_clip.gotoAndStop("ReadyPlay");
 
+        _states = CardGameStates.IDLE;
+        _clipPlaying = true;
+
         _clip.gotoAndStop("StageIn");
-        _clip.playTo("StageInComplete");
+        _clip.playTo("StageInComplete", null, function()
+        {
+            _clipPlaying = false;
+            _states = CardGameStates.READY_START;
+        });
     };
 
     _p.afterStageIn = function(options)
     {
         GameTimer.show();
-        restart();
     };
 
     _p.beforeStageOut = function(options)
@@ -154,21 +175,36 @@
     {
     };
 
-
-    function restart()
+    _p.backToStart = function()
     {
+        _states = CardGameStates.IDLE;
 
-        _clip.btnStart.addEventListener("mousedown", function()
+        changeTimeText(DURATION);
+
+        var tl = new TimelineMax;
+        tl.to($doms.gameContainer,.4, {autoAlpha:0}, 0);
+        tl.add(function()
         {
-            _clip.playTo("ReadyPlay", null, function()
-            {
-                cardIn();
-            });
+            $doms.gameContainer.css("display", "none");
+            TweenMax.set($doms.gameContainer, {autoAlpha:1});
         });
 
-    }
 
-    function cardIn()
+        _clipPlaying = true;
+        _clip.playTo("StageInComplete", null, function()
+        {
+            _states = CardGameStates.READY_START;
+            _clipPlaying = false;
+        });
+    };
+
+    _p.startFromShuffle = function()
+    {
+        GameTimer.changeValue(DURATION);
+        cardIn(true);
+    };
+
+    function cardIn(withShuffleIn)
     {
         $doms.gameContainer.css("display", "block");
 
@@ -176,27 +212,32 @@
 
         setCardsActive(false);
 
-
-
-        var i, card;
-        for(i=0;i<_cardList.length;i++)
-        {
-            card = _cardList[i];
-            card.shuffleProgress = 0;
-            card.toCover();
-
-            $(card.domElement).css("display", "none");
-            updateCardPosition(card);
-        }
-
-
         var tl = new TimelineMax();
-        tl.set(_centerCard.domElement, {scale:0});
-        tl.to(_centerCard.domElement,.4, {ease:Back.easeOut.config(4), scale:1});
 
+        if(withShuffleIn)
+        {
+            tl.staggerTo(_cardList,.6, {ease:Power1.easeInOut, shuffleProgress:0, onUpdate:onShuffle, onUpdateParams:["{self}"]},.05, 0);
+            tl.add(function()
+            {
 
+            }, "+=.5");
+        }
+        else
+        {
+            var i, card;
+            for(i=0;i<_cardList.length;i++)
+            {
+                card = _cardList[i];
+                card.shuffleProgress = 0;
+                card.toCover();
 
-        //tl.staggerTo(_cardList,.6, {ease:Power1.easeInOut, shuffleProgress:0, onUpdate:onShuffle, onUpdateParams:["{self}"]},.05, 0);
+                $(card.domElement).css("display", "none");
+                updateCardPosition(card);
+            }
+
+            tl.set(_centerCard.domElement, {scale:0});
+            tl.to(_centerCard.domElement,.4, {ease:Back.easeOut.config(4), scale:1});
+        }
 
         tl.add(shuffleCards);
         tl.staggerTo(_cardList,.6, {ease:Power1.easeInOut, shuffleProgress:1, onUpdate:onShuffle, onUpdateParams:["{self}"]},.05, "-=.2");
@@ -302,7 +343,6 @@
                     },.8);
                 }
             }
-
         }
     }
 
@@ -310,12 +350,20 @@
     {
         _states = CardGameStates.WIN;
         //changeTimeText("WIN");
+
+        TweenMax.delayedCall(.7, function()
+        {
+            GameWin.show("win");
+        });
     }
 
     function gameFail()
     {
         _states = CardGameStates.FAIL;
         //changeTimeText("TIME OUT");
+
+        GameFail.show();
+        //GameWin.show("win");
 
     }
 
@@ -333,6 +381,7 @@
             index = array.splice(parseInt(Math.random()*array.length), 1)[0];
             card = _cardList[i];
             card.setFace(index);
+            card.toCover();
         }
     }
 

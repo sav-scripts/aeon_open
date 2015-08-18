@@ -138,6 +138,15 @@
 
         var string = url.indexOf('?') == -1? url: url.substr(0, url.indexOf('?'));
 
+        var array = string.split("/");
+        var lastPart = array[array.length-1];
+        if(lastPart.indexOf(".") !== -1) array.pop();
+
+        string = array.join("/");
+
+        console.log(lastPart.indexOf("."));
+        console.log(string);
+
         if(string.indexOf('#') == -1) return string;
         else return string.substr(0, string.indexOf('#'));
 

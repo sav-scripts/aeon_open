@@ -127,19 +127,32 @@
     Utility.getPath = function(url)
     {
         /*
-        if(!url) url = window.location.href;
-        var array = Utility.analyzeURL(url);
+         if(!url) url = window.location.href;
+         var array = Utility.analyzeURL(url);
 
-        return url.replace(array[7], "");
-        */
+         return url.replace(array[7], "");
+         */
         if(!url) url = window.location.href;
 
         //var rest = (location.pathname+location.search).substr(1);
 
         var string = url.indexOf('?') == -1? url: url.substr(0, url.indexOf('?'));
 
-        if(string.indexOf('#') == -1) return string;
-        else return string.substr(0, string.indexOf('#'));
+        //console.log(lastPart.indexOf("."));
+        //console.log(string);
+
+        if(string.indexOf('#') !== -1)
+        {
+            string = string.substr(0, string.indexOf('#'));
+        }
+
+
+        var array = string.split("/");
+        var lastPart = array[array.length-1];
+        if(lastPart.indexOf(".") !== -1) array.pop();
+        string = array.join("/") + "/";
+
+        return string;
 
     };
 

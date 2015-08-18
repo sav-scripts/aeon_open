@@ -294,7 +294,7 @@ html, body{
 .number_char{
     position: absolute;
     bottom:0;
-    background:url(../images/numbers.png);
+    background:url(../images/numbers.png) no-repeat;
     width: 80px;
     height: 82px;
 }
@@ -312,12 +312,12 @@ html, body{
     position: fixed;
     top:50%;
     left:50%;
-    width: 635px;
-    height: 637px;
-    margin-left:-317px;
-    margin-top:-318px;
+    width: 637px;
+    height: 639px;
+    margin-left:-318px;
+    margin-top:-319px;
     overflow: hidden;
-    background: #2FC0EB;
+    background: rgba(47, 192, 235, .8);
     z-index: 100;
 
     visibility: hidden;
@@ -404,6 +404,61 @@ html, body{
     cursor: pointer;
     z-index: 1;
     background-size: contain;
+}
+
+/** fail **/
+.fail_container{
+    position: fixed;
+    top:50%;
+    left:50%;
+    width: 655px;
+    height: 657px;
+    margin-left:-327px;
+    margin-top:-328px;
+    overflow: hidden;
+    background: rgba(0,0,0,.6);
+    z-index: 100;
+
+    border-radius: 7px;
+
+    visibility: hidden;
+}
+.fail_title{
+    position: absolute;
+    background: url(../images/gmae_end_t01.png) no-repeat;
+    background-size: cover;
+    width: 335px;
+    height: 208px;
+    left:50%;
+    top:50%;
+    margin-left: -167px;
+    margin-top: -240px;
+}
+.fail_btn_again{
+    position: absolute;
+    background: url(../images/game_end_btn02.png) no-repeat;
+    background-size:cover;
+    width: 293px;
+    height: 88px;
+    left:50%;
+    top:50%;
+    margin-top:45px;
+    margin-left:-146px;
+}
+.fail_btn_exit{
+    position: absolute;
+    background: url(../images/game_end_btn03.png) no-repeat;
+    background-size:cover;
+    width: 293px;
+    height: 88px;
+    left:50%;
+    top:50%;
+    margin-top:155px;
+    margin-left:-146px;
+}
+.fail_btn_again:hover, .fail_btn_exit:hover{
+    cursor: pointer;
+    background-position: 0 bottom;
 }
 
 /** Share Form **/
@@ -513,10 +568,16 @@ html, body{
 }
 .check_rule{
     position: absolute;
-    top:2px;
-    left:-212px;
-    width: 40px;
-    height: 40px;
+    top:-4px;
+    left:-214px;
+    width: 31px;
+    height: 31px;
+}
+.check_rule label{
+    left:50%;
+    top:50%;
+    margin-left: -9px;
+    margin-top: -9px;
 }
 .field_label{
     position: absolute;

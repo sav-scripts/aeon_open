@@ -16,6 +16,7 @@
 
     _p.init = init;
     _p.settings = _settings;
+    _p.isLocal = false;
 
     var _hashDic,
         _contentList;
@@ -31,6 +32,20 @@
     {
         SimplePreloading.init();
         SimplePreloading.show();
+
+
+        if(window.location.host == "local.savorks.com" || window.location.host == "socket.savorks.com")
+        {
+            _p.isLocal = true;
+        }
+
+        var appId = "948770988512734";
+        if(window.location.host == 'local.savorks.com') appId = '948775455178954';
+
+        //SavFB.init(appId);
+        FBHelper.init(appId, function()
+        {
+        });
 
         _p.canvas = canvas = document.getElementById("canvas");
         if(!window.images) window.images = {};
@@ -62,6 +77,8 @@
         Prize.init();
         CardGame.init();
         GameWin.init();
+        ShareForm.init();
+        GameFail.init();
 
         handleContentAndLink();
 
@@ -225,6 +242,9 @@
             currentObj = _hashDic[_currentHash];
             targetObj = _hashDic[hashName];
 
+            GameWin.hide();
+            GameFail.hide();
+
             _currentHash = hashName;
 
             if(currentObj.stageClass && currentObj.stageClass.beforeStageOut) currentObj.stageClass.beforeStageOut(options);
@@ -275,6 +295,8 @@
         Prize.resize(width, height, scale);
         CardGame.resize(width, height, scale);
         GameWin.resize(width, height, scale);
+        ShareForm.resize(width, height, scale);
+        GameFail.resize(width, height, scale);
 
         stage.update();
     }

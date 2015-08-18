@@ -36,22 +36,26 @@
         Helper.getInitValue($doms.btnShare[0]);
         Helper.getInitValue($doms.btnExit[0]);
 
-        ShareForm.init();
-
         $doms.container.css("visibility", "visible").css("display", "none");
 
-        _p.show("win");
+        //_p.show("rule");
 
         $doms.btnShare.bind("click", function()
         {
             if(_isLock) return;
-           _p.toMode("form");
+           //_p.toMode("form");
+
+            _p.tryShare(function()
+            {
+                _p.toMode("form");
+            });
         });
 
         $doms.btnExit.bind("click", function()
         {
             if(_isLock) return;
             _p.hide();
+            CardGame.backToStart();
         });
 
         $doms.btnRuleBack.bind("click", function()
@@ -66,12 +70,19 @@
         return !_isHiding;
     };
 
+    _p.isLocking = function()
+    {
+        return _isLock;
+    };
+
     _p.show = function(mode, cb)
     {
         if(!_isHiding) return;
         _isHiding = false;
 
         _isLock = true;
+
+        ShareForm.clearForm();
 
         if(mode) _p.toMode(mode, 0);
 
@@ -122,6 +133,44 @@
         });
     };
 
+    _p.tryShare = function(cb)
+    {
+        SimplePreloading.show();
+
+        var urlPath = Utility.getPath();
+
+        var url = urlPath + "misc/fb_share.jpg";
+
+        console.log(url);
+
+        var params =
+        {
+            method: 'feed',
+            name: "Aeon 3D-350 匹配你的閱歷非凡",
+            picture: url,
+            caption: "AEON 3D350",
+            description: "Aeon 3D-350新上市！欲搶先試乘體驗3D-350騎乘感受，速上新車官網登錄！",
+            link: urlPath
+        };
+
+        FB.ui(params, function(response)
+        {
+            //console.log("response = " + JSON.stringify(response));
+            if (response && response.post_id)
+            {
+                if(cb) cb.apply();
+            }
+            else
+            {
+                alert("您必須要分享才能參加活動喔.");
+            }
+
+            SimplePreloading.hide();
+        });
+
+        //if(cb) cb.apply();
+    };
+
     _p.resize = function(width, height, scale)
     {
         Helper.applyTransform($doms.container[0], scale, ["ml", "mt", "w", "h"]);
@@ -135,8 +184,6 @@
         Helper.applyTransform($doms.btnRuleBack[0], scale, ["w", "h"]);
 
         //$doms.btnShare.css("background-size", "cover");
-
-        ShareForm.resize(width, height, scale);
 
     };
 
@@ -173,6 +220,7 @@
         $doms.iconZone = $doms.addressZone.find(".drop_down_icon");
 
         $doms.checkRule = $doms.container.find(".check_rule");
+        $doms.checkBox = $("#rule_check_box");
 
         $doms.fieldLabel = $doms.container.find(".field_label");
 
@@ -219,18 +267,136 @@
 
         $doms.btnSend.bind("mousedown", function()
         {
+            if(GameWin.isLocking()) return;
             trySend();
+
+            //clearForm();
         });
 
         $doms.ruleTrigger.bind("mousedown", function()
         {
+            if(GameWin.isLocking()) return;
            GameWin.toMode("rule");
         });
     };
 
     function trySend()
     {
-        SimplePreloading.show();
+        var formObj = checkForm();
+
+        if(formObj) execute(formObj);
+
+        function execute(params)
+        {
+            SimplePreloading.show();
+
+            if(Main.isLocal)
+            {
+                SimplePreloading.hide();
+                alert("您的參加資料已送出成功, 感謝您的參予.");
+                clearForm();
+
+                GameWin.hideAndStartNewGame();
+            }
+            else
+            {
+                var url = "/api/send_form.ashx";
+                var method = "POST";
+
+                //SimplePreloading.setProgress("");
+                //SimplePreloading.show();
+
+                $.ajax
+                ({
+                    url: url,
+                    type: method,
+                    data: params,
+                    dataType: "json"
+                })
+                    .done(function (response)
+                    {
+                        //if(closeLoading || (closeLoading == null && _defaultCloseLoading)) SimplePreloading.hide();
+
+                        console.log("response = " + JSON.stringify(response));
+
+                        if (response.res == "ok")
+                        {
+                            alert("您的參加資料已送出成功, 感謝您的參予.");
+                            clearForm();
+
+                            GameWin.hideAndStartNewGame();
+                        }
+                        else
+                        {
+                            alert(response.res);
+                        }
+                        SimplePreloading.hide();
+
+                    })
+                    .fail(function ()
+                    {
+                        alert("無法取得伺服器資料");
+                        SimplePreloading.hide();
+                    });
+            }
+        }
+    }
+
+    _p.clearForm = clearForm;
+    function clearForm()
+    {
+        $doms.selectCounty.prop('selectedIndex', 0);
+        FormHelper.completeZone($doms.selectCounty, $doms.selectZone);
+
+        $doms.checkBox.attr("checked", false);
+
+        $doms.field_name.val("");
+        $doms.field_phone.val("");
+        $doms.field_addressDetail.val("");
+    }
+
+    function checkForm()
+    {
+        if(!$doms.checkBox.is(":checked")){ alert('您必須先閱讀並同意個人資料告知事項'); return; }
+
+        var formObj={};
+        var dom;
+
+        dom = $doms.field_name[0];
+        if(PatternSamples.onlySpace.test(dom.value))
+        {
+            alert('請輸入您的名稱'); dom.focus(); return;
+        }else formObj.name = dom.value;
+
+        dom = $doms.field_phone[0];
+        if(!PatternSamples.phone.test(dom.value))
+        {
+            alert('請輸入正確的手機號碼'); dom.focus(); return;
+        }
+        else formObj.phone = dom.value;
+
+
+        dom = $doms.field_addressDetail[0];
+        if(PatternSamples.onlySpace.test(dom.value))
+        {
+            alert('請輸入您的地址'); dom.focus(); return;
+        }
+        else formObj.address_detail = dom.value;
+
+        var addressObj = FormHelper.getAddressValue($doms.selectCounty, $doms.selectZone);
+
+        if(addressObj.county && addressObj.zone)
+        {
+            formObj.address_county = addressObj.county;
+            formObj.address_zone = addressObj.zone;
+        }
+        else
+        {
+            alert('請選擇您居住的區域'); return;
+        }
+
+
+        return formObj;
     }
 
     _p.resize = function(width, height, scale)
@@ -263,6 +429,43 @@
 
     _p.init = function()
     {
+        $doms.container = $(".fail_container");
+        $doms.title = $doms.container.find(".fail_title");
+        $doms.btnAgain = $doms.container.find(".fail_btn_again");
+        $doms.btnExit = $doms.container.find(".fail_btn_exit");
+
+        var w = $doms.container.width(),
+            h = $doms.container.height();
+
+        var dic =
+        {
+            "w":true,
+            "h":false,
+            "margin-left": true,
+            "margin-top": false
+        };
+
+        Helper.pxToPercent($doms.title[0],w,h,dic);
+        Helper.pxToPercent($doms.btnAgain[0],w,h,dic);
+        Helper.pxToPercent($doms.btnExit[0],w,h,dic);
+
+        Helper.getInitValue($doms.container[0]);
+
+        $doms.container.css("visibility", "visible").css("display", "none");
+
+        //_p.show();
+
+        $doms.btnAgain.bind("click", function()
+        {
+            _p.hide();
+            CardGame.startFromShuffle();
+        });
+
+        $doms.btnExit.bind("click", function()
+        {
+            _p.hide();
+            CardGame.backToStart();
+        });
 
     };
 
@@ -275,6 +478,31 @@
     {
         if(!_isHiding) return;
         _isHiding = false;
+
+        $doms.container.css("display", "block");
+        var tl = new TimelineMax;
+        tl.set($doms.container, {autoAlpha:0});
+        tl.to($doms.container,.4, {autoAlpha:1});
+    };
+
+    _p.hide = function()
+    {
+        if(_isHiding) return;
+        _isHiding = true;
+
+        var tl = new TimelineMax;
+        tl.to($doms.container,.4, {autoAlpha:0});
+        tl.add(function()
+        {
+            $doms.container.css("display", "none");
+        });
+    };
+
+    _p.resize = function(width, height, scale)
+    {
+
+        Helper.applyTransform($doms.container[0], scale, ["ml", "mt", "w", "h"]);
+        $doms.container.css("border-radius", scale * 7 + "px");
     };
 
 
