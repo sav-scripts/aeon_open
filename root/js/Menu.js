@@ -63,9 +63,12 @@
 
         function setupButton(index)
         {
-            var $item, $icon, $text;
+            var $item, $icon, $text, iconAnime;
+
+            var isHover = false;
 
             $item = $doms.container.find(".menu_item:nth-of-type("+(index+1)+")");
+            $icon = $item.find(".menu_icon");
 
             $item.bind("mousedown", function()
             {
@@ -78,6 +81,10 @@
             $item.bind("mouseover", function(event)
             {
                 if($item.has(event.relatedTarget).length > 0) return;
+
+                isHover = true;
+
+                iconAnime.restart();
 
                 $doms.dotLine.css("display", "block");
                 //console.log("hover");
@@ -96,12 +103,126 @@
             {
                 if($item.has(event.relatedTarget).length > 0) return;
 
+                isHover = false;
+
+                //tl.progress(0);
+                //tl.pause();
+
                 //console.log("out");
                 $doms.dotLine.css("display", "none");
 
             });
+
+            var tl = iconAnime = new TimelineMax({paused:true});
+
+            if(index == 0)
+            {
+                tl.set($icon, {transformOrigin:"50% 100%"});
+                tl.to($icon,.3,{scaleY:.5});
+                tl.to($icon,.45,{scaleY:1, y:-50});
+                tl.to($icon,.45,{ease:Power1.easeIn, scaleY:1, y:0});
+                //tl.to($icon,.5,{scaleY:1, rotation:0});
+                tl.add(function()
+                {
+                    if(isHover) tl.restart();
+                });
+                tl.to($icon,.3, {scaleY:.5});
+                tl.to($icon,.3, {scaleY:1});
+            }
+            else if(index == 1)
+            {
+                tl.set($icon, {transformOrigin:"30% 80%"});
+                tl.to($icon,.3,{ease:Power1.easeInOut, rotation:-30});
+                tl.to($icon,.3,{ease:Power1.easeInOut, rotation:0});
+                //tl.to($icon,.5,{scaleY:1, rotation:0});
+                tl.add(function()
+                {
+                    if(isHover) tl.restart();
+                });
+            }
+            else if(index == 2)
+            {
+                tl.set($icon, {transformOrigin:"40% 40%"});
+                tl.to($icon,.7,{ease:Power1.easeInOut, rotation:-360, x:-80});
+                tl.to($icon,.7,{ease:Power1.easeInOut, rotation:0, x:0});
+                //tl.to($icon,.5,{scaleY:1, rotation:0});
+                tl.add(function()
+                {
+                    if(isHover) tl.restart();
+                });
+            }
+            else if(index == 3)
+            {
+                tl.set($icon, {transformOrigin:"40% 50%"});
+                tl.to($icon,.3,{scaleY:.5, y:10});
+                tl.to($icon,.45,{scaleY:1, y:-40, rotation:-180});
+                tl.to($icon,.45,{ease:Power1.easeIn, scaleY:1, y:0, rotation:-360});
+                //tl.to($icon,.5,{scaleY:1, rotation:0});
+                tl.add(function()
+                {
+                    if(isHover) tl.restart();
+                });
+                tl.to($icon,.3, {scaleY:.5, y:10});
+                tl.to($icon,.3, {scaleY:1, y:0});
+            }
+            else if(index == 4)
+            {
+                tl.set($icon, {transformOrigin:"0% 50%"});
+                tl.to($icon,.4,{ease:Power1.easeIn, x:-41});
+                tl.to($icon,.3,{ease:Power1.easeOut, scaleX:.5});
+                tl.to($icon,.4,{ease:Power1.easeIn, x: 10, scaleX:1});
+                tl.to($icon,.3,{ease:Power1.easeOut, x: 29, scaleX:.5});
+
+                //tl.to($icon,.5,{scaleY:1, rotation:0});
+                tl.add(function()
+                {
+                    //if(isHover) tl.restart();
+                    if(isHover)
+                    {
+                        //tl.restart();
+                        TweenMax.to($icon,.4,{ease:Power1.easeIn, x: -41, scaleX:1, onComplete:function()
+                        {
+                            tl.seek(.4);
+                            tl.resume();
+                        }});
+                    }
+                    else
+                    {
+                        TweenMax.to($icon,.4, {x:0, scaleX:1});
+                    }
+                });
+            }
+            else if(index == 5)
+            {
+                tl.set($icon, {transformOrigin:"42% 90%", scaleX:1});
+                tl.to($icon,.3,{scaleY:.5});
+                tl.to($icon,.45,{ease:Power1.easeOut, scaleY:1, y:-30});
+                tl.to($icon,.45,{ease:Power1.easeIn, scaleY:1, y:0});
+                tl.to($icon,.9, {ease:Linear.easeNone, x:-40}, "-=.9");
+                tl.to($icon,.3,{scaleY:.5});
+                tl.set($icon, {scaleX:-1});
+                tl.to($icon,.45,{ease:Power1.easeOut, scaleY:1, y:-30});
+                tl.to($icon,.45,{ease:Power1.easeIn, scaleY:1, y:0});
+                tl.to($icon,.9, {ease:Linear.easeNone, x:0}, "-=.9");
+                tl.to($icon,.3,{scaleY:.5});
+                tl.set($icon, {scaleX:1});
+
+                //tl.to($icon,.5,{scaleY:1, rotation:0});
+                tl.add(function()
+                {
+                    if(isHover)
+                    {
+                        tl.seek(.3);
+                        tl.resume();
+                    }
+                });
+                //tl.to($icon,.3, {scaleY:.5});
+                tl.to($icon,.3, {scaleY:1});
+            }
         }
 
+
+        show();
     };
 
     function show()
