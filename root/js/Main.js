@@ -42,10 +42,13 @@
         var appId = "948770988512734";
         if(window.location.host == 'local.savorks.com') appId = '948775455178954';
 
-        //SavFB.init(appId);
         FBHelper.init(appId, function()
         {
         });
+
+
+        SoundPlayer.initSound();
+
 
         _p.canvas = canvas = document.getElementById("canvas");
         if(!window.images) window.images = {};
@@ -60,7 +63,12 @@
         if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
     }
 
-    function handleComplete() {
+    function handleComplete()
+    {
+        $("#logo").bind("click", function()
+        {
+            window.open("http://www.aeonmotor.com.tw/", "_blank");
+        });
 
         _p.stage = stage = new createjs.Stage(canvas);
         stage.enableMouseOver(10);
@@ -90,6 +98,10 @@
         toFirstHash();
 
         SimplePreloading.hide();
+
+        //SoundPlayer.playBGM();
+
+        //GameWin.show("rule");
     }
 
     function handleContentAndLink()
@@ -117,6 +129,7 @@
 
             if(_hashDic[hashName])
             {
+                ga("send", "pageview", hashName);
                 if(_isPlaying)
                 {
                     _cbAfterToContent = function()
@@ -188,6 +201,7 @@
     {
         var firstHash = Utility.getHash();
         if(!_hashDic[firstHash]) firstHash = _defaultHash;
+        ga("send", "pageview", firstHash);
         _p.toContent(firstHash);
     }
 
@@ -250,10 +264,14 @@
             if(currentObj.stageClass && currentObj.stageClass.beforeStageOut) currentObj.stageClass.beforeStageOut(options);
             if(currentObj.stageClass && currentObj.stageClass.afterStageOut) currentObj.stageClass.afterStageOut(options);
 
-            MainScene.toLabel(hashName, false, function()
+            TweenMax.delayedCall(.4, function()
             {
                 if(targetObj.stageClass && targetObj.stageClass.beforeStageIn) targetObj.stageClass.beforeStageIn(options);
                 if(targetObj.stageClass && targetObj.stageClass.afterStageIn) targetObj.stageClass.afterStageIn(options);
+            });
+
+            MainScene.toLabel(hashName, false, function()
+            {
 
                 toContentComplete();
 

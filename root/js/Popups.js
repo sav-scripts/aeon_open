@@ -15,6 +15,8 @@
             "rule": "-200%"
         };
 
+    var _ruleBtnBackTwinkle;
+
     _p.init = function()
     {
         $doms.container = $(".win_container");
@@ -28,6 +30,11 @@
         $doms.btnRuleBack = $(".rule_btn_back");
         Helper.getInitValue($doms.btnRuleBack[0]);
 
+        var tl = _ruleBtnBackTwinkle = new TimelineMax({repeat:-1});
+        tl.to($doms.btnRuleBack,.5,{y:5});
+        tl.to($doms.btnRuleBack,.5,{y:0});
+
+
         $doms.title = $doms.container.find(".win_title");
         $doms.btnShare = $doms.container.find(".win_btn_share");
         $doms.btnExit = $doms.container.find(".win_btn_exit");
@@ -37,8 +44,6 @@
         Helper.getInitValue($doms.btnExit[0]);
 
         $doms.container.css("visibility", "visible").css("display", "none");
-
-        //_p.show("rule");
 
         $doms.btnShare.bind("click", function()
         {
@@ -139,17 +144,17 @@
 
         var urlPath = Utility.getPath();
 
-        var url = urlPath + "misc/fb_share.jpg";
+        var url = urlPath + "misc/fb_share.jpg?v=1";
 
-        console.log(url);
+        //console.log(url);
 
         var params =
         {
             method: 'feed',
-            name: "Aeon 3D-350 匹配你的閱歷非凡",
+            name: "宏佳騰【OPEN小將 * AEON 特仕車】上市",
             picture: url,
-            caption: "AEON 3D350",
-            description: "Aeon 3D-350新上市！欲搶先試乘體驗3D-350騎乘感受，速上新車官網登錄！",
+            caption: "【OPEN小將 * AEON 特仕車】",
+            description: "宏佳騰 【OPEN小將 * AEON】 特仕車上市!購車還送OPEN小將系列商品。分享還可抽萬元購車金，如此好康，快來參加。",
             link: urlPath
         };
 
@@ -296,7 +301,8 @@
                 alert("您的參加資料已送出成功, 感謝您的參予.");
                 clearForm();
 
-                GameWin.hideAndStartNewGame();
+                GameWin.hide();
+                CardGame.backToStart();
             }
             else
             {
@@ -324,7 +330,8 @@
                             alert("您的參加資料已送出成功, 感謝您的參予.");
                             clearForm();
 
-                            GameWin.hideAndStartNewGame();
+                            GameWin.hide();
+                            CardGame.backToStart();
                         }
                         else
                         {
@@ -366,7 +373,7 @@
         if(PatternSamples.onlySpace.test(dom.value))
         {
             alert('請輸入您的名稱'); dom.focus(); return;
-        }else formObj.name = dom.value;
+        }else formObj.user_name = dom.value;
 
         dom = $doms.field_phone[0];
         if(!PatternSamples.phone.test(dom.value))

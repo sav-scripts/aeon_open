@@ -11,6 +11,17 @@ html, body{
     /*overflow-y: scroll;*/
 }
 
+#logo{
+    position: fixed;
+    top:12px;
+    left:12px;
+    background: url(../images/index_logo.png);
+    width: 141px;
+    height: 39px;
+    cursor: pointer;
+    z-index: 101;
+}
+
 #canvas{
     position: absolute;
     top:100px;
@@ -44,10 +55,11 @@ html, body{
     right: 10px;
     top: 10px;
     z-index: 1;
-    background: url(../images/menu_close_icon.jpg);
-    width: 33px;
-    height: 25px;
+    background: url(../images/menu_close_icon_v2.png);
+    width: 27px;
+    height: 27px;
     cursor: pointer;
+    /*background-size: cover;*/
 }
 #menu .btn_close{
     position: absolute;
@@ -305,6 +317,9 @@ html, body{
     bottom:0;
     background: #fff;
 }
+.dot_char.red{
+    background: #d92121;
+}
 /* ================ */
 
 /** popup **/
@@ -396,7 +411,7 @@ html, body{
 }
 .rule_btn_back{
     position: absolute;
-    background: url(../images/game_end_x.png) no-repeat;
+    background: url(../images/game_end_x_v2.png) no-repeat;
     right:25px;
     top:10px;
     width: 40px;

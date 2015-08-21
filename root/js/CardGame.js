@@ -17,14 +17,14 @@
         NUM_CARDS = NUM_COMBOS * 2,
         CARD_WIDTH = 225,
         CARD_HEIGHT = 227,
-        COL_GAP = CARD_WIDTH - 10,
-        ROW_GAP = CARD_HEIGHT - 10;
+        COL_GAP = CARD_WIDTH - 10 - 4,
+        ROW_GAP = CARD_HEIGHT - 10 - 4;
 
     //var GAME_WIDTH = CARD_WIDTH * 3,
     //    GAME_HEIGHT = CARD_HEIGHT * 3;
 
     var DURATION = 30;
-    var WIN_COUNT = 2;
+    var WIN_COUNT = 4;
 
     /*
      readyStart
@@ -152,6 +152,8 @@
     {
         GameTimer.hide();
 
+        SoundPlayer.stopBGM();
+
         if(_states == CardGameStates.PLAYING)
         {
             _countDownTimer.pause();
@@ -210,6 +212,8 @@
 
         _states = CardGameStates.SHUFFLING;
 
+        SoundPlayer.playBGM();
+
         setCardsActive(false);
 
         var tl = new TimelineMax();
@@ -262,6 +266,8 @@
 
             _p.time = DURATION;
 
+
+
             _countDownTimer = new TimelineMax;
             _countDownTimer.to(_p, DURATION, {time:0, ease:Linear.easeNone, onUpdate:function()
             {
@@ -271,6 +277,7 @@
             {
                 //console.log("time out");
 
+                SoundPlayer.stopBGM();
                 setCardsActive(false);
 
                 gameFail();
@@ -308,7 +315,8 @@
                 {
                     if(_states == CardGameStates.PLAYING)
                     {
-                        console.log("matched");
+                        //console.log("matched");
+                        createjs.Sound.play("ok", "none");
 
                         lastCard.playMatched(true);
                         card.playMatched(false);
@@ -316,6 +324,7 @@
                         _completeCount ++;
                         if(_completeCount >= WIN_COUNT)
                         {
+                            SoundPlayer.stopBGM();
                             _countDownTimer.pause();
                             setCardsActive(false);
                             gameWin();
@@ -324,7 +333,8 @@
                 }
                 else
                 {
-                    console.log("not match");
+                    //console.log("not match");
+                    createjs.Sound.play("no", "none");
 
                     lastCard.playUnMatched(true);
                     card.playUnMatched();
@@ -524,6 +534,7 @@
             {
                 if(_p.flipAble)
                 {
+                    createjs.Sound.play("flip", "none");
                     _p.setActive(false);
                     _p.flip();
                 }
@@ -694,7 +705,10 @@
 
     var CHAR_WIDTH = 80,
         CHAR_GAP = 68,
-        CHAR_HEIGHT = 82;
+        CHAR_HEIGHT = 82,
+        SMALL_CHAR_WIDTH = 20,
+        SMALL_CHAR_HEIGHT = 20,
+        SMALL_CHAR_GAP = 20;
 
     var $doms = {};
 
@@ -773,7 +787,18 @@
         if(string.length == 1) string = "00" + string;
         else if(string.length == 2) string = "0" + string;
 
-        var i, v, charDom, startX = 0, offset = -8, width = 0;
+        var i, v, charDom, startX = 0, offset = -8, width = 0, pOffset = 0;
+
+        if(_value <= 10)
+        {
+            pOffset = -800;
+            $doms.dot.toggleClass("red", true);
+        }
+        else
+        {
+            $doms.dot.toggleClass("red", false);
+        }
+
         for(i=0;i<string.length;i++)
         {
             //console.log(string.charAt(i));
@@ -790,15 +815,18 @@
                 startX += 9;
             }
 
+
             if(i >= string.length-2)
             {
-                var smallRate = .25;
-                $(charDom).width(smallRate*CHAR_WIDTH).height(smallRate*CHAR_HEIGHT).css("background-position", -CHAR_WIDTH*v*smallRate).css("background-size", "cover").css("left", startX + offset);
-                startX += smallRate * CHAR_GAP;
+                pOffset = _value < 10? -1800: -1600;
+
+                $(charDom).width(SMALL_CHAR_WIDTH-2).height(SMALL_CHAR_HEIGHT).css("background-position", -SMALL_CHAR_WIDTH*v+pOffset + "px 0").css("left", startX + offset);
+                startX += SMALL_CHAR_GAP;
             }
             else
             {
-                $(charDom).width(CHAR_WIDTH).height(CHAR_HEIGHT).css("background-position", -CHAR_WIDTH*v).css("left", startX + offset);
+                pOffset = _value < 10? -800: 0;
+                $(charDom).width(CHAR_WIDTH-2).height(CHAR_HEIGHT).css("background-position", -CHAR_WIDTH*v + pOffset + "px 0").css("left", startX + offset);
                 startX += CHAR_GAP;
                 width += CHAR_GAP;
             }

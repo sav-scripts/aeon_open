@@ -18,6 +18,12 @@
 
         _clip = new lib.WatchClip();
 
+        _clip.leftBike.cursor = "pointer";
+        _clip.rightBike.cursor = "pointer";
+
+        _clip.leftBike.addRollOver();
+        _clip.rightBike.addRollOver();
+
         _clip.leftBike.addEventListener("mousedown", function()
         {
             if(_isLock) return;

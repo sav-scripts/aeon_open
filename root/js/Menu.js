@@ -52,9 +52,9 @@
             hide();
         });
 
-        $doms.btnInfo.bind("mousedown", function()
+        $doms.btnInfo.bind("click", function()
         {
-            console.log("購車資訊");
+            window.open("http://www.aeonmotor.com.tw/shop.php", "_blank");
         });
 
 
@@ -119,7 +119,7 @@
             {
                 tl.set($icon, {transformOrigin:"50% 100%"});
                 tl.to($icon,.3,{scaleY:.5});
-                tl.to($icon,.45,{scaleY:1, y:-50});
+                tl.to($icon,.45,{scaleY:1, y:-30});
                 tl.to($icon,.45,{ease:Power1.easeIn, scaleY:1, y:0});
                 //tl.to($icon,.5,{scaleY:1, rotation:0});
                 tl.add(function()
@@ -142,6 +142,22 @@
             }
             else if(index == 2)
             {
+                var tl2 = new TimelineMax;
+
+                tl.set($icon, {transformOrigin:"40% 40%"});
+                tl.to($icon,.9,{ease:Power1.easeInOut, rotation:360});
+                tl.to($icon,.4, {ease:Linear.easeNone, x:30, y:-24}, "-=.9");
+                tl.to($icon,.5, {ease:Linear.easeNone, x:90}, "-=.5");
+                tl.to($icon,.9,{ease:Power1.easeInOut, rotation:0}, "+=.5");
+                tl.to($icon,.5, {ease:Linear.easeNone, x:30, y:-24}, "-=.9");
+                tl.to($icon,.4, {ease:Linear.easeNone, x:0, y:0}, "-=.4");
+                //tl.to($icon,.5,{scaleY:1, rotation:0});
+                tl.add(function()
+                {
+                    if(isHover) tl.restart();
+                }, "+=.5");
+
+                /*
                 tl.set($icon, {transformOrigin:"40% 40%"});
                 tl.to($icon,.7,{ease:Power1.easeInOut, rotation:-360, x:-80});
                 tl.to($icon,.7,{ease:Power1.easeInOut, rotation:0, x:0});
@@ -150,18 +166,22 @@
                 {
                     if(isHover) tl.restart();
                 });
+                */
             }
             else if(index == 3)
             {
                 tl.set($icon, {transformOrigin:"40% 50%"});
                 tl.to($icon,.3,{scaleY:.5, y:10});
-                tl.to($icon,.45,{scaleY:1, y:-40, rotation:-180});
+                tl.to($icon,.45,{scaleY:1, y:-20, rotation:-180});
                 tl.to($icon,.45,{ease:Power1.easeIn, scaleY:1, y:0, rotation:-360});
                 //tl.to($icon,.5,{scaleY:1, rotation:0});
+                tl.set($icon, {rotation:0});
+                //tl.to($icon,.3, {ease:Power1.easeOut, rotation:-30});
+                //tl.to($icon,.3, {ease:Power1.easeIn, rotation:0});
                 tl.add(function()
                 {
                     if(isHover) tl.restart();
-                });
+                }, "+=.2");
                 tl.to($icon,.3, {scaleY:.5, y:10});
                 tl.to($icon,.3, {scaleY:1, y:0});
             }
@@ -196,12 +216,12 @@
             {
                 tl.set($icon, {transformOrigin:"42% 90%", scaleX:1});
                 tl.to($icon,.3,{scaleY:.5});
-                tl.to($icon,.45,{ease:Power1.easeOut, scaleY:1, y:-30});
+                tl.to($icon,.45,{ease:Power1.easeOut, scaleY:1, y:-20});
                 tl.to($icon,.45,{ease:Power1.easeIn, scaleY:1, y:0});
-                tl.to($icon,.9, {ease:Linear.easeNone, x:-40}, "-=.9");
+                tl.to($icon,.9, {ease:Linear.easeNone, x:-30}, "-=.9");
                 tl.to($icon,.3,{scaleY:.5});
                 tl.set($icon, {scaleX:-1});
-                tl.to($icon,.45,{ease:Power1.easeOut, scaleY:1, y:-30});
+                tl.to($icon,.45,{ease:Power1.easeOut, scaleY:1, y:-20});
                 tl.to($icon,.45,{ease:Power1.easeIn, scaleY:1, y:0});
                 tl.to($icon,.9, {ease:Linear.easeNone, x:0}, "-=.9");
                 tl.to($icon,.3,{scaleY:.5});
@@ -222,7 +242,7 @@
         }
 
 
-        show();
+        //show();
     };
 
     function show()

@@ -14,9 +14,10 @@ createjs.MovieClip.prototype.getLabel = function(label)
     return null;
 };
 
-createjs.MovieClip.prototype.playTo = function(frameOrLabel, fixDuration, cb, offset)
+createjs.MovieClip.prototype.playTo = function(frameOrLabel, fixDuration, cb, offset, ease)
 {
     var clip = this;
+
 
     if(typeof (frameOrLabel) == "string")
     {
@@ -39,15 +40,22 @@ createjs.MovieClip.prototype.playTo = function(frameOrLabel, fixDuration, cb, of
     }
     else
     {
+        if(ease == null) ease = Linear.easeNone;
+
+        if(!clip.tweenObj) clip.tweenObj = {frame:0};
+
         var targetFrame = frameOrLabel,
             currentFrame = this.currentFrame,
             duration = Math.abs(targetFrame - currentFrame) / Main.settings.FPS,
-            tweenObj = {frame:currentFrame};
+            tweenObj = clip.tweenObj;
+        tweenObj.frame = currentFrame;
+
+        TweenMax.killTweensOf(tweenObj);
 
         if(fixDuration != null) duration = fixDuration;
 
         var tl = new TimelineMax;
-        tl.to(tweenObj, duration, {ease:Linear.easeNone, frame:targetFrame, onUpdate:function()
+        tl.to(tweenObj, duration, {ease:ease, frame:targetFrame, onUpdate:function()
         {
             //_clip.currentFrame = tweenObj.frame;
             clip.gotoAndStop(tweenObj.frame);
@@ -56,4 +64,35 @@ createjs.MovieClip.prototype.playTo = function(frameOrLabel, fixDuration, cb, of
             if(cb) cb.apply();
         }});
     }
+};
+
+createjs.MovieClip.prototype.addRollOver = function()
+{
+    var clip = this;
+
+    var isHover = false;
+
+    clip.addEventListener("mouseover", function()
+    {
+        var wasHover = isHover;
+        isHover = true;
+
+        if(wasHover != isHover)
+        {
+            clip.playTo("Focused");
+        }
+    });
+
+    clip.addEventListener("mouseout", function()
+    {
+        var wasHover = isHover;
+        isHover = false;
+
+        if(wasHover != isHover)
+        {
+            clip.playTo("Normal");
+        }
+
+    });
+
 };

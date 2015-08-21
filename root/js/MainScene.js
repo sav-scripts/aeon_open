@@ -26,6 +26,8 @@
     _p.toLabel = function(label, instantPlay, cb)
     {
         var duration = instantPlay? 0: 1;
+
+        //_clip.playTo(label, duration, cb, null, Power1.easeInOut);
         _clip.playTo(label, duration, cb);
     };
 
