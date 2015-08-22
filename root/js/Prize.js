@@ -11,6 +11,13 @@
 
         _clip = new lib.PrizeClip();
 
+        _clip.btnLink.cursor = "pointer";
+
+        _clip.btnLink.addEventListener("click", function()
+        {
+            window.open("https://docs.google.com/forms/d/1MN4Spmr1qlhRVakqEtNQTXkKRnOtEDjSSG0GdqKJZR4/viewform", "_blank");
+        });
+
     };
 
     _p.beforeStageIn = function()

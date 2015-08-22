@@ -3,7 +3,9 @@
 
     var _p = window.Feature = {};
 
-    var NUM_DETAILS = 6;
+    var LEFT_NUM_DETAILS = 6,
+        RIGHT_NUM_DETAILS = 4,
+        NUM_DETAILS = 6;
 
     var _clip,
         clips = {};
@@ -49,6 +51,7 @@
         _clip.btnLeft.addEventListener("mousedown", function()
         {
             if(_isLock || _isSwitchDetail) return;
+
             var index = _currentIndex - 1;
             if(index < 0) index = NUM_DETAILS-1;
 
@@ -65,7 +68,7 @@
         });
 
         var i;
-        for(i=0;i<NUM_DETAILS;i++){setupDot(i);}
+        for(i=0;i<6;i++){setupDot(i);}
 
         function setupDot(index)
         {
@@ -121,6 +124,10 @@
     {
         _isInLeftBikeDetail = isLeftBike;
 
+        NUM_DETAILS = _isInLeftBikeDetail? LEFT_NUM_DETAILS: RIGHT_NUM_DETAILS;
+
+        updateDotPositions();
+
         _isLock = true;
 
         _clip.gotoAndStop("ToDetail");
@@ -134,6 +141,24 @@
         {
             _isLock = false;
         });
+    }
+
+
+    function updateDotPositions()
+    {
+        var i, dotClip,
+            gap = 40,
+            width = (NUM_DETAILS-1) * gap,
+            startX = -width * .5;
+
+        for(i=0;i<6;i++)
+        {
+            dotClip = clips.dotGroup["dot_" + i];
+            dotClip.x = startX;
+            startX += gap;
+
+            dotClip.visible = (i<NUM_DETAILS);
+        }
     }
 
     function exitDetailMode()
