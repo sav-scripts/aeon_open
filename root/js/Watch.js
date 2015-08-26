@@ -10,6 +10,8 @@
         _currentIndex = 0,
         _isActive = false;
 
+    var _viewPort = {width:0, height:0, customed:false};
+
     var $mouseTrigger;
 
     _p.init = function ()
@@ -18,11 +20,28 @@
 
         _clip = new lib.WatchClip();
 
+        if(_clip.vp)
+        {
+            _viewPort.width = Main.settings.width * _clip.vp.scaleX;
+            _viewPort.height = Main.settings.height * _clip.vp.scaleY;
+            _clip.vp.visible = false;
+            _viewPort.customed = true;
+        }
+        else
+        {
+            _viewPort.width = Main.settings.width;
+            _viewPort.height = Main.settings.height;
+        }
+
         _clip.leftBike.cursor = "pointer";
         _clip.rightBike.cursor = "pointer";
 
-        _clip.leftBike.addRollOver();
-        _clip.rightBike.addRollOver();
+        if(_clip.leftBike.addRollOver)
+        {
+            _clip.leftBike.addRollOver();
+            _clip.rightBike.addRollOver();
+        }
+
 
         _clip.leftBike.addEventListener("mousedown", function()
         {
@@ -186,10 +205,13 @@
     }
 
 
-    _p.
-     resize = function(width , height)
+    _p.resize = function(width , height, scale)
     {
-
+        if(_viewPort.customed)
+        {
+            var bound = Helper.getSize_contain(width, height, _viewPort.width, _viewPort.height);
+            _clip.scaleX = _clip.scaleY = bound.ratio / scale;
+        }
     };
 
 }());

@@ -4,7 +4,45 @@
     <meta charset="UTF-8">
     <title>宏佳騰【OPEN小將 * AEON 特仕車】上市</title>
     <link rel="icon" href="images/16x16.jpg" type="image/x-icon"/>
-    <meta name="viewport" content="width=720">
+    <!--<meta name="viewport" content="width=720">-->
+    <script>
+
+        var wasUsedLandscape = false;
+        var rewrited = false;
+
+        updateViewport();
+        function updateViewport()
+        {
+            var portraitModeMinWidth = 720;
+            var landscapeModeMinWidth = 1200;
+
+            var divString, scaleRate, targetWidth;
+
+            if (wasUsedLandscape || (screen.width < portraitModeMinWidth && screen.width < screen.height))
+            {
+
+                targetWidth = portraitModeMinWidth;
+            }
+            else if(screen.width < landscapeModeMinWidth && screen.width > screen.height)
+            {
+                wasUsedLandscape = true;
+                targetWidth = landscapeModeMinWidth
+            }
+
+            if(targetWidth != null)
+            {
+                /*$("#myViewport").detach();*/
+                scaleRate =  screen.width/targetWidth;
+//                    var contentString = 'width='+targetWidth+'px,initial-scale='+scaleRate+', maximum-scale='+scaleRate+', minimum-scale='+scaleRate+', user-scaleable=no';
+                var contentString = 'width='+targetWidth+'px,initial-scale='+scaleRate+', user-scaleable=no'+', maximum-scale='+scaleRate;
+                divString = '<meta id="myViewport" name="viewport" content="'+contentString+'">';
+                document.write(divString);
+
+                rewrited = true;
+            }
+        }
+
+    </script>
 
     <meta property="og:title" content="宏佳騰【OPEN小將 * AEON 特仕車】上市" />
     <meta property="og:type" content="activity" />
@@ -13,6 +51,7 @@
     <meta property="og:image" content="http://open.aeonmotor.com.tw/misc/fb_share.jpg" />
 
 
+    <script src="js/lib/modernizr.custom.98362.js"></script>
 
     <script src="js/lib/jquery.min.js"></script>
     <script src="js/lib/TweenMax.min.js"></script>
@@ -31,7 +70,8 @@
     <script src="js/lib/FormHelper.0.0.4.js"></script>
     <script src="js/lib/Utility.0.0.11.js"></script>
     <script src="js/CreatejsExtend.js"></script>
-    <script src="AeonOpen.js"></script>
+    <!--<script src="AeonOpen.js"></script>-->
+    <!--<script src="AeonOpenMobile.js"></script>-->
     <script src="js/SoundPlayer.js"></script>
     <script src="js/Menu.js"></script>
     <script src="js/Index.js"></script>
@@ -64,7 +104,7 @@
 
 </head>
 
-<body onload="Main.init();" style="background-color:#D4D4D4">
+<body onload="Main.init();">
 
     <canvas id="canvas" width="550" height="400"></canvas>
 

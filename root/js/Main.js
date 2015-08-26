@@ -33,6 +33,15 @@
         SimplePreloading.init();
         SimplePreloading.show();
 
+        if($(window).width() < $(window).height())
+        {
+            _settings.isVerticalMode = true;
+            _settings.width = 720;
+            _settings.height = 1280;
+        }
+
+
+
 
         if(window.location.host == "local.savorks.com" || window.location.host == "socket.savorks.com")
         {
@@ -46,7 +55,23 @@
         {
         });
 
+        //var wgLibs = ["js/lib/three.min.js", "js/MyThreeHelper.js", "js/WireGraphic.js"+s];
 
+        Modernizr.load
+        ({
+            test:_settings.isVerticalMode,
+            nope:["AeonOpen.js"],
+            yep:["AeonOpenMobile.js"],
+            complete:flaDataLoaded
+        });
+
+
+
+
+    }
+
+    function flaDataLoaded()
+    {
         SoundPlayer.initSound();
 
 
@@ -301,13 +326,15 @@
         $(canvas).attr("width", width).attr("height", height).css("left", 0).css("top", 0);
 
         var bound = Helper.getSize_cover(width, height, _settings.width, _settings.height);
+        var bound2 = Helper.getSize_contain(width, height, _settings.width, _settings.height);
 
-        var scale = _settings.scale = bound.ratio;
+        var scale = _settings.scale = bound.ratio,
+            scale2 = bound2.ratio;
 
         Menu.resize(width, height, scale);
         MainScene.resize(width, height, scale);
         Index.resize(width, height, scale);
-        Feature.resize(width, height, scale);
+        Feature.resize(width, height, scale, scale2);
         Watch.resize(width, height, scale);
         Detail.resize(width, height, scale);
         Prize.resize(width, height, scale);

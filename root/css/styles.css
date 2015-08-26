@@ -9,6 +9,7 @@ html, body{
     overflow: hidden;
     /*overflow-x: hidden;*/
     /*overflow-y: scroll;*/
+    background: #D4D4D4;
 }
 
 #logo{

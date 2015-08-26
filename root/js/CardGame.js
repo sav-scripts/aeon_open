@@ -13,6 +13,8 @@
         _cardList = [],
         _cardDoms = [];
 
+    var _viewPort = {width:0, height:0, customed:false};
+
     var NUM_COMBOS = 4,
         NUM_CARDS = NUM_COMBOS * 2,
         CARD_WIDTH = 225,
@@ -103,6 +105,19 @@
         $doms.gameContainer.append(_centerCard.domElement);
 
         _clip = new lib.CardGameClip();
+
+        if(_clip.vp)
+        {
+            _viewPort.width = Main.settings.width * _clip.vp.scaleX;
+            _viewPort.height = Main.settings.height * _clip.vp.scaleY;
+            _clip.vp.visible = false;
+            _viewPort.customed = true;
+        }
+        else
+        {
+            _viewPort.width = Main.settings.width;
+            _viewPort.height = Main.settings.height;
+        }
 
         _clip.btnStart.addEventListener("mousedown", function()
         {
@@ -444,21 +459,11 @@
 
     _p.resize = function(width, height, scale)
     {
-        //_clip.x = width * .5;
-        //_clip.y = height * .5;
-
-        //width = 225*3;
-        //height = 227*3;
-
-        var boundWidth = 800,
-            boundHeight = 1040;
-
-
-        //var bound = Helper.getSize_contain(width, height, boundWidth, boundHeight);
-
-        //CardGame.scale = bound.ratio;
-        //_clip.scaleX = bound.ratio;
-        //_clip.scaleY = bound.ratio;
+        if(_viewPort.customed)
+        {
+            var bound = Helper.getSize_contain(width, height, _viewPort.width, _viewPort.height);
+            scale = _clip.scaleX = _clip.scaleY = bound.ratio / scale;
+        }
 
         CardGame.scale = scale;
 

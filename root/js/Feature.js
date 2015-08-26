@@ -10,6 +10,8 @@
     var _clip,
         clips = {};
 
+    var _viewPort = {width:0, height:0, customed:false};
+
     var _isLock = true,
         _isSwitchDetail = false,
         _isInLeftBikeDetail = false,
@@ -20,12 +22,27 @@
     {
         _clip = new lib.FeatureClip();
 
+        if(_clip.vp)
+        {
+            _viewPort.width = Main.settings.width * _clip.vp.scaleX;
+            _viewPort.height = Main.settings.height * _clip.vp.scaleY;
+            _clip.vp.visible = false;
+            _viewPort.customed = true;
+        }
+        else
+        {
+            _viewPort.width = Main.settings.width;
+            _viewPort.height = Main.settings.height;
+        }
+
         clips.topDetail = _clip.detailContainer.topDetail;
         clips.bottomDetail = _clip.detailContainer.bottomDetail;
         clips.dotGroup = _clip.progressDot;
 
         _clip.leftBike.cursor = "pointer";
         _clip.rightBike.cursor = "pointer";
+
+        //console.log(_clip.leftBike.prototype);
 
         _clip.leftBike.addRollOver();
         _clip.rightBike.addRollOver();
@@ -223,12 +240,17 @@
 
     function changeDetailFrame(clip, index)
     {
-        clip.gotoAndStop(_isInLeftBikeDetail? index: index+NUM_DETAILS);
+        clip.gotoAndStop(_isInLeftBikeDetail? index: index+LEFT_NUM_DETAILS);
     }
 
 
-    _p.resize = function(width , height)
+    _p.resize = function(width , height, scale)
     {
+        if(_viewPort.customed)
+        {
+            var bound = Helper.getSize_contain(width, height, _viewPort.width, _viewPort.height);
+            _clip.scaleX = _clip.scaleY = bound.ratio / scale;
+        }
 
     };
 
