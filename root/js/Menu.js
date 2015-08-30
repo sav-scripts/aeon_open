@@ -29,6 +29,10 @@
         $doms.menuContainer = $doms.container.find(".menu_container");
         $doms.dotLine = $doms.container.find(".menu_line");
         $doms.btnInfo = $doms.container.find(".btn_info");
+        $doms.buttonContainer = $doms.container.find(".button_container");
+
+        Helper.getInitValue($doms.buttonContainer[0]);
+        Helper.getInitValue($doms.btnInfo[0]);
 
         $doms.container.css("visibility", "visible");
 
@@ -54,12 +58,13 @@
 
         $doms.btnInfo.bind("click", function()
         {
+            hide();
             window.open("http://www.aeonmotor.com.tw/shop.php", "_blank");
         });
 
 
         var i;
-        for(i=0;i<6;i++){ setupButton(i) };
+        for(i=0;i<6;i++){ setupButton(i); }
 
         function setupButton(index)
         {
@@ -77,6 +82,8 @@
                 Main.toHash(hash);
                 hide();
             });
+
+            if(Main.settings.isVerticalMode) return;
 
             $item.bind("mouseover", function(event)
             {
@@ -263,7 +270,6 @@
         {
            _isPlaying = false;
         });
-        
 
     }
 
@@ -290,6 +296,24 @@
     _p.resize = function(width, height, scale)
     {
 
+        if(Main.settings.isVerticalMode)
+        {
+            $doms.menuContainer.width(width);
+            MENU_WIDTH = width;
+
+            var rate = height / 1280;
+
+            //TweenMax.set($doms.buttonContainer, {scale:rate});
+            Helper.applyTransform($doms.buttonContainer[0],rate,["mt"]);
+            Helper.applyTransform($doms.btnInfo[0],rate,["mt"]);
+            $(".menu_item").css("height", 166*rate);
+        }
+        else
+        {
+            $doms.menuContainer.css("width", "");
+            MENU_WIDTH = $doms.menuContainer.width();
+
+        }
     };
 
 }());

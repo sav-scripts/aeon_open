@@ -36,6 +36,8 @@
         _clip.leftBike.cursor = "pointer";
         _clip.rightBike.cursor = "pointer";
 
+        _clip.hintIcon.visible = false;
+
         if(_clip.leftBike.addRollOver)
         {
             _clip.leftBike.addRollOver();
@@ -112,10 +114,23 @@
             updateProgress();
         });
 
-        _clip.playTo("ToDetailComplete", null, function()
+        _clip.hintIcon.visible = true;
+        _clip.hintIcon.alpha = 0;
+
+        var tl = new TimelineMax;
+        tl.to(_clip.hintIcon,.4, {alpha:1});
+        tl.to(_clip.hintIcon,.4, {alpha:0}, 2.5);
+        tl.add(function()
         {
+            _clip.hintIcon.visible = false;
             _isActive = true;
             _isLock = false;
+        });
+
+        _clip.playTo("ToDetailComplete", null, function()
+        {
+            //_isActive = true;
+            //_isLock = false;
         });
     }
 

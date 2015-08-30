@@ -149,10 +149,12 @@
 
         _clip.gotoAndStop("ToDetail");
 
-        TweenMax.delayedCall(.1, function()
-        {
-            toDetailIndex(0, 0);
-        });
+        //TweenMax.delayedCall(.1, function()
+        //{
+        //    toDetailIndex(0, 0);
+        //});
+
+        toDetailIndex(0, 0);
 
         _clip.playTo("ToDetailComplete", null, function()
         {
@@ -190,7 +192,7 @@
 
     function toDetailIndex(index, duration)
     {
-        if(duration == null) duration = .5;
+        if(duration == null) duration = 0;
 
         var oldIndex = _currentIndex;
         _currentIndex = index;
@@ -240,7 +242,12 @@
 
     function changeDetailFrame(clip, index)
     {
-        clip.gotoAndStop(_isInLeftBikeDetail? index: index+LEFT_NUM_DETAILS);
+        var i = _isInLeftBikeDetail? index: index+LEFT_NUM_DETAILS;
+        clip.gotoAndStop(i);
+        if(Main.settings.isVerticalMode == false)
+        {
+            clip["textClip_" + i].gotoAndPlay(0);
+        }
     }
 
 

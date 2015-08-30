@@ -178,6 +178,8 @@
 
     _p.resize = function(width, height, scale)
     {
+        scale = CardGame.scale;
+
         Helper.applyTransform($doms.container[0], scale, ["ml", "mt", "w", "h"]);
 
         Helper.applyTransform($doms.title[0], scale, ["l", "t", "w", "h"]);
@@ -408,6 +410,8 @@
 
     _p.resize = function(width, height, scale)
     {
+        scale = CardGame.scale;
+
         Helper.applyTransform($doms.container[0], scale, ["w", "h"]);
 
         //console.log($doms.container.find("input, select").length);
@@ -507,6 +511,7 @@
 
     _p.resize = function(width, height, scale)
     {
+        scale = CardGame.scale;
 
         Helper.applyTransform($doms.container[0], scale, ["ml", "mt", "w", "h"]);
         $doms.container.css("border-radius", scale * 7 + "px");

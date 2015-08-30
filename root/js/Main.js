@@ -30,6 +30,23 @@
 
     function init()
     {
+        //alert("canvas support = " + Modernizr.canvas + ",\n audio support = " + Modernizr.audio);
+
+
+        if(Modernizr.canvas) init_execute();
+        else
+        {
+            $("#no_support").css("display", "block");
+        }
+
+
+    }
+
+    function init_execute()
+    {
+        //var v = "?v=2";
+        var v = "?v=" + new Date().getTime();
+
         SimplePreloading.init();
         SimplePreloading.show();
 
@@ -60,19 +77,18 @@
         Modernizr.load
         ({
             test:_settings.isVerticalMode,
-            nope:["AeonOpen.js"],
-            yep:["AeonOpenMobile.js"],
+            nope:["AeonOpen.js"+v],
+            yep:["AeonOpenMobile.js"+v],
             complete:flaDataLoaded
         });
-
-
-
 
     }
 
     function flaDataLoaded()
     {
         SoundPlayer.initSound();
+
+        if(Utility.urlParams.use_compress == "1") useCompressed();
 
 
         _p.canvas = canvas = document.getElementById("canvas");
@@ -82,6 +98,15 @@
         loader.addEventListener("fileload", handleFileLoad);
         loader.addEventListener("complete", handleComplete);
         loader.loadManifest(lib.properties.manifest);
+    }
+
+    function useCompressed()
+    {
+        var array = lib.properties.manifest, i, src;
+        for(i=0;i<array.length;i++)
+        {
+            array[i].src = array[i].src.replace("images/", "images_compressed/");
+        }
     }
 
     function handleFileLoad(evt) {

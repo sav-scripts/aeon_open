@@ -462,7 +462,8 @@
         if(_viewPort.customed)
         {
             var bound = Helper.getSize_contain(width, height, _viewPort.width, _viewPort.height);
-            scale = _clip.scaleX = _clip.scaleY = bound.ratio / scale;
+            var contentScale = _clip.scaleX = _clip.scaleY = bound.ratio / scale;
+            scale = contentScale * scale;
         }
 
         CardGame.scale = scale;

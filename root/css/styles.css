@@ -12,6 +12,17 @@ html, body{
     background: #D4D4D4;
 }
 
+#no_support{
+    position: absolute;
+    top:49%;
+    font-size: 18px;
+    color:#333;
+    width: 100%;
+    text-align: center;
+
+    display: none;
+}
+
 #logo{
     position: fixed;
     top:12px;
@@ -182,6 +193,114 @@ html, body{
     cursor: pointer;
     left: 40px;
     bottom:75px;
+}
+/*@media screen and (max-aspect-ratio: 1/1)*/
+@media screen and (max-width: 720px) and (max-aspect-ratio: 1/1)
+{
+    #menu{
+        z-index: 102;
+    }
+    #menu .btn_open{
+
+        background: url(../images/mobile_menu_close_icon.png) 100px 0 no-repeat;
+        width: 172px;
+        height: 158px;
+        /*background-size:cover;*/
+    }
+    #menu .btn_close{
+        width: 50px;
+        height: 50px;
+        background-size:cover;
+        display: none;
+    }
+    .top_grid, .bottom_grid{
+        display: none;
+    }
+    .menu_container{
+        /*width: 720px;*/
+        width: 100%;
+        background:rgba(157,0,9,.9);
+    }
+
+
+
+    #menu .button_container{
+        position: absolute;
+        left:50%;
+        top:50%;
+        width:437px;
+        margin-left: -218px;
+        margin-top: -598px;
+    }
+    #menu .menu_item{
+        position: relative;
+        float: left;
+        width:437px;
+        height: 166px;
+        margin-bottom: 0;
+        cursor: pointer;
+        /*background: #000;*/
+    }
+    #menu .menu_icon{
+        display:none;
+    }
+    #menu .menu_item:nth-of-type(1) .menu_icon{
+        background-position: 0 5px;
+    }
+    #menu .menu_item:nth-of-type(2) .menu_icon{
+        background-position: 0 -51px;
+    }
+    #menu .menu_item:nth-of-type(3) .menu_icon{
+        background-position: 0 -107px;
+    }
+    #menu .menu_item:nth-of-type(4) .menu_icon{
+        background-position: 0 -163px;
+    }
+    #menu .menu_item:nth-of-type(5) .menu_icon{
+        background-position: 0 -219px;
+    }
+    #menu .menu_item:nth-of-type(6) .menu_icon{
+        background-position: 0 -275px;
+    }
+    #menu .menu_text{
+        position: absolute;
+        left:0;
+        width: 437px;
+        height: 166px;
+        background: url(../images/mobile_menu_txt.png) no-repeat;
+    }
+    #menu .menu_item:nth-of-type(1) .menu_text{
+        background-position: 0 42px;
+    }
+    #menu .menu_item:nth-of-type(2) .menu_text{
+        background-position: 0 -124px;
+    }
+    #menu .menu_item:nth-of-type(3) .menu_text{
+        background-position: 0 -290px;
+    }
+    #menu .menu_item:nth-of-type(4) .menu_text{
+        background-position: 0 -456px;
+    }
+    #menu .menu_item:nth-of-type(5) .menu_text{
+        background-position: 0 -622px;
+    }
+    #menu .menu_item:nth-of-type(6) .menu_text{
+        background-position: 0 -788px;
+    }
+
+    #menu .btn_info{
+        position: absolute;
+        background: url(../images/mobile_menu_txt.png) no-repeat 0 -978px;
+        width: 437px;
+        height: 166px;
+        cursor: pointer;
+        left: 50%;
+        margin-left: -218px;
+        bottom:auto;
+        top:50%;
+        margin-top: 400px;
+    }
+
 }
 
 
@@ -403,7 +522,8 @@ html, body{
     background:url(../images/game_rules_t.png) no-repeat;
     width: 518px;
     /*height: 859px;*/
-    height: 879px;
+    /*height: 879px;*/
+    height: 3702px;
     left:50%;
     margin-left: -259px;
     background-size: contain;
