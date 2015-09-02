@@ -17,7 +17,7 @@ lib.properties = {
 		{src:"images/_360_bg06.png", id:"_360_bg06"},
 		{src:"images/_360_bg07.png", id:"_360_bg07"},
 		{src:"images/_360_bike01.png", id:"_360_bike01"},
-		{src:"images/_360_bike02.png", id:"_360_bike02"},
+		{src:"images/_360_bike02pngcopy.png", id:"_360_bike02pngcopy"},
 		{src:"images/_360_bike_coin01.png", id:"_360_bike_coin01"},
 		{src:"images/_360_bike_coin02.png", id:"_360_bike_coin02"},
 		{src:"images/_360_bike_coin03.png", id:"_360_bike_coin03"},
@@ -52,7 +52,7 @@ lib.properties = {
 		{src:"images/game_tit02.png", id:"game_tit02"},
 		{src:"images/game_tit03_v2.png", id:"game_tit03_v2"},
 		{src:"images/gift_btn.png", id:"gift_btn"},
-		{src:"images/gift_copyright.png", id:"gift_copyright"},
+		{src:"images/gift_copyrightpngcopy.png", id:"gift_copyrightpngcopy"},
 		{src:"images/gift_pro01_v222.png", id:"gift_pro01_v222"},
 		{src:"images/gift_pro02_v2222.png", id:"gift_pro02_v2222"},
 		{src:"images/gift_pro03_v2222.png", id:"gift_pro03_v2222"},
@@ -75,7 +75,7 @@ lib.properties = {
 		{src:"images/mobile_product04pngcopy.png", id:"mobile_product04pngcopy"},
 		{src:"images/mobile_product05pngcopy.png", id:"mobile_product05pngcopy"},
 		{src:"images/mobile_product06pngcopy.png", id:"mobile_product06pngcopy"},
-		{src:"images/mobile_product07pngcopy.png", id:"mobile_product07pngcopy"},
+		{src:"images/mobile_product07pngcopy2.png", id:"mobile_product07pngcopy2"},
 		{src:"images/mobile_product08pngcopy2.png", id:"mobile_product08pngcopy2"},
 		{src:"images/mobile_product09pngcopy.png", id:"mobile_product09pngcopy"},
 		{src:"images/mobile_product10pngcopy.png", id:"mobile_product10pngcopy"},
@@ -90,12 +90,12 @@ lib.properties = {
 		{src:"images/product_bg07.png", id:"product_bg07"},
 		{src:"images/product_bg09.png", id:"product_bg09"},
 		{src:"images/product_bg_line.png", id:"product_bg_line"},
-		{src:"images/product_name01.png", id:"product_name01"},
-		{src:"images/product_name02.png", id:"product_name02"},
+		{src:"images/product_name01pngcopy.png", id:"product_name01pngcopy"},
+		{src:"images/product_name02pngcopy.png", id:"product_name02pngcopy"},
 		{src:"images/product_o.png", id:"product_o"},
 		{src:"images/product_oo.png", id:"product_oo"},
 		{src:"images/product_pro01.png", id:"product_pro01"},
-		{src:"images/product_pro02pngcopy.png", id:"product_pro02pngcopy"},
+		{src:"images/product_pro02pngcopy2.png", id:"product_pro02pngcopy2"},
 		{src:"images/product_v.png", id:"product_v"},
 		{src:"images/ston.png", id:"ston"}
 	]
@@ -155,8 +155,8 @@ p.nominalBounds = new cjs.Rectangle(0,0,702,782);
 p.nominalBounds = new cjs.Rectangle(0,0,335,472);
 
 
-(lib._360_bike02 = function() {
-	this.initialize(img._360_bike02);
+(lib._360_bike02pngcopy = function() {
+	this.initialize(img._360_bike02pngcopy);
 }).prototype = p = new cjs.Bitmap();
 p.nominalBounds = new cjs.Rectangle(0,0,298,448);
 
@@ -365,8 +365,8 @@ p.nominalBounds = new cjs.Rectangle(0,0,363,56);
 p.nominalBounds = new cjs.Rectangle(0,0,148,157);
 
 
-(lib.gift_copyright = function() {
-	this.initialize(img.gift_copyright);
+(lib.gift_copyrightpngcopy = function() {
+	this.initialize(img.gift_copyrightpngcopy);
 }).prototype = p = new cjs.Bitmap();
 p.nominalBounds = new cjs.Rectangle(0,0,248,62);
 
@@ -503,8 +503,8 @@ p.nominalBounds = new cjs.Rectangle(0,0,462,850);
 p.nominalBounds = new cjs.Rectangle(0,0,462,850);
 
 
-(lib.mobile_product07pngcopy = function() {
-	this.initialize(img.mobile_product07pngcopy);
+(lib.mobile_product07pngcopy2 = function() {
+	this.initialize(img.mobile_product07pngcopy2);
 }).prototype = p = new cjs.Bitmap();
 p.nominalBounds = new cjs.Rectangle(0,0,462,850);
 
@@ -593,14 +593,14 @@ p.nominalBounds = new cjs.Rectangle(0,0,869,64);
 p.nominalBounds = new cjs.Rectangle(0,0,4,349);
 
 
-(lib.product_name01 = function() {
-	this.initialize(img.product_name01);
+(lib.product_name01pngcopy = function() {
+	this.initialize(img.product_name01pngcopy);
 }).prototype = p = new cjs.Bitmap();
 p.nominalBounds = new cjs.Rectangle(0,0,128,46);
 
 
-(lib.product_name02 = function() {
-	this.initialize(img.product_name02);
+(lib.product_name02pngcopy = function() {
+	this.initialize(img.product_name02pngcopy);
 }).prototype = p = new cjs.Bitmap();
 p.nominalBounds = new cjs.Rectangle(0,0,121,48);
 
@@ -623,8 +623,8 @@ p.nominalBounds = new cjs.Rectangle(0,0,29,29);
 p.nominalBounds = new cjs.Rectangle(0,0,391,443);
 
 
-(lib.product_pro02pngcopy = function() {
-	this.initialize(img.product_pro02pngcopy);
+(lib.product_pro02pngcopy2 = function() {
+	this.initialize(img.product_pro02pngcopy2);
 }).prototype = p = new cjs.Bitmap();
 p.nominalBounds = new cjs.Rectangle(0,0,491,428);
 
@@ -645,7 +645,7 @@ p.nominalBounds = new cjs.Rectangle(0,0,726,205);
 	this.initialize();
 
 	// Layer 1
-	this.instance = new lib._360_bike02();
+	this.instance = new lib._360_bike02pngcopy();
 	this.instance.setTransform(0,-233.5);
 
 	this.addChild(this.instance);
@@ -741,7 +741,7 @@ p.nominalBounds = new cjs.Rectangle(-206,-86,412,172);
 	this.initialize();
 
 	// Layer 1
-	this.instance = new lib.product_pro02pngcopy();
+	this.instance = new lib.product_pro02pngcopy2();
 	this.instance.setTransform(-288.6,-214);
 
 	this.addChild(this.instance);
@@ -911,7 +911,7 @@ p.nominalBounds = new cjs.Rectangle(0,0,720,744);
 	this.initialize();
 
 	// Layer 1
-	this.instance = new lib.product_name02();
+	this.instance = new lib.product_name02pngcopy();
 	this.instance.setTransform(-60.5,-24);
 
 	this.addChild(this.instance);
@@ -1068,7 +1068,7 @@ p.nominalBounds = new cjs.Rectangle(-118,-118,236,236);
 	this.initialize();
 
 	// Layer 1
-	this.instance = new lib.gift_copyright();
+	this.instance = new lib.gift_copyrightpngcopy();
 	this.instance.setTransform(-124,-31);
 
 	this.addChild(this.instance);
@@ -1135,7 +1135,7 @@ p.nominalBounds = new cjs.Rectangle(0,-5,175.2,27.6);
 	this.initialize();
 
 	// Layer 1
-	this.instance = new lib.product_name01();
+	this.instance = new lib.product_name01pngcopy();
 	this.instance.setTransform(-64,-23);
 
 	this.addChild(this.instance);
@@ -1423,8 +1423,8 @@ p.nominalBounds = new cjs.Rectangle(2.6,0.1,102.6,65.3);
 	this.instance_5 = new lib.mobile_product06pngcopy();
 	this.instance_5.setTransform(-232.1,-415);
 
-	this.instance_6 = new lib.mobile_product07pngcopy();
-	this.instance_6.setTransform(-232.1,-415);
+	this.instance_6 = new lib.mobile_product07pngcopy2();
+	this.instance_6.setTransform(-231.1,-415);
 
 	this.instance_7 = new lib.mobile_product09pngcopy();
 	this.instance_7.setTransform(-232.1,-415);
